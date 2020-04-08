@@ -1,0 +1,8 @@
+# directories
+/bin
+/build
+/vendor
+
+# files
+/.zshrc
+/.vimrc
