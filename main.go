@@ -14,7 +14,8 @@ import (
 )
 
 var (
-	homeDir string
+	homeDir  string
+	duration time.Duration = time.Millisecond * 1000
 )
 
 var (
@@ -89,7 +90,7 @@ func main() {
 				}
 			}
 		}()
-		if err := w.Start(time.Millisecond * 100); err != nil {
+		if err := w.Start(duration); err != nil {
 			log.Fatalln(err)
 		}
 	}
