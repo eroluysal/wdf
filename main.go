@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	homeDir  string
+	homeDir string
 )
 
 var (
@@ -69,7 +69,7 @@ func main() {
 		for source, _ := range fileMaps {
 			w.Add(source)
 		}
-		go func () {
+		go func() {
 			for {
 				select {
 				case event := <-w.Event:
