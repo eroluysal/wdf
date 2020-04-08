@@ -67,7 +67,9 @@ func main() {
 		w := watcher.New()
 		go w.Wait()
 		for source, _ := range fileMaps {
-			w.Add(source)
+			if err = w.Add(source); err != nil {
+				panic(err)
+			}
 		}
 		go func() {
 			for {
