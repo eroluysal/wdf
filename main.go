@@ -16,9 +16,7 @@ import (
 var (
 	homeDir  string
 	duration time.Duration = time.Millisecond * 1000
-)
 
-var (
 	config = flag.String("c", ".wdf.stub.yaml", "")
 	watch  = flag.Bool("w", false, "")
 )
@@ -58,7 +56,7 @@ func main() {
 	}
 
 	for s, t := range fileMaps {
-		if _, err := copy(s, t); err != nil {
+		if _, err := copyFile(s, t); err != nil {
 			panic(err)
 		}
 		log.Printf("%s file was updated.\n", t)
@@ -78,7 +76,7 @@ func main() {
 				case event := <-w.Event:
 					if event.Op == watcher.Write {
 						to := fileMaps[event.Path]
-						if _, err := copy(event.Path, to); err != nil {
+						if _, err := copyFile(event.Path, to); err != nil {
 							log.Fatalln(err)
 						}
 						log.Printf("%s was updated.\n", to)
@@ -96,8 +94,8 @@ func main() {
 	}
 }
 
-func copy(from, to string) (bool, error) {
-	finfo, err := os.Stat(from)
+func copyFile(from, to string) (bool, error) {
+	info, err := os.Stat(from)
 	if err != nil {
 		return false, err
 	}
@@ -105,7 +103,7 @@ func copy(from, to string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	if err := ioutil.WriteFile(to, source, finfo.Mode()); err != nil {
+	if err := ioutil.WriteFile(to, source, info.Mode()); err != nil {
 		return false, err
 	}
 	return true, nil
